@@ -1,0 +1,82 @@
+{
+  "folders": [
+    {
+      "name": "SCSS",
+      "path": "./path/to/src/scss"
+    },
+    {
+      "name": "JavaScript",
+      "path": "./path/to/src/js"
+    }
+    {
+      "name": "Templates",
+      "path": "./path/to/twig/templates"
+    },
+    {
+      "name": "Modules",
+      "path": "./modules"
+    },
+    {
+      "name": "Config",
+      "path": "./sites/default/config"
+    },
+    {
+      "name": "Theme Root",
+      "path": "./path/to/theme"
+    },
+    {
+      "name": "Project Root",
+      "path": "."
+    },
+  ],
+  "settings": {
+    // Set integrated terminal to open in this folder by default.
+    "terminal.integrated.cwd": ".",
+    // Always indent with 2 spaces per drupal coding standards.
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    // Add empty line to end of file per coding standards.
+    "files.insertFinalNewline": true,
+    // Add file type associations.
+    "files.associations": {
+      "*.html": "twig",
+      "*.module": "php",
+      "*.theme": "php",
+      "*.inc": "php"
+    },
+    // Send deleted items to system
+    // trash instead of insta-deleting.
+    "files.enableTrash": true
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      // DDEV xDebug Listener
+      // https://ddev.readthedocs.io/en/stable/users/step-debugging/#vscode
+      {
+        "name": "Listen for XDebug",
+        "type": "php",
+        "request": "launch",
+        "hostname": "0.0.0.0",
+        "port": 9000,
+        "pathMappings": {
+          "/var/www/html": "${workspaceRoot}",
+        }
+      }
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "redhat.vscode-yaml", // Yaml Langugae Support
+      "mblode.twig-language-2", // Twig Language Support
+      "mrmlnc.vscode-duplicate", // Duplicate action
+      "marcostazi.vs-code-drupal", // Extends PHP syntax highlighting for Drupal
+      "tsega.drupal-8-twig-snippets", // Drupal 8 Twig Snippets
+      "tsega.drupal-8-javascript-snippets", // Drupal 8 JS Snippets
+      "andrewdavidblum.drupal-smart-snippets", // Drupal Hook Snippets
+      "formulahendry.auto-close-tag", // Automatically create closing HTML tags
+      "formulahendry.auto-rename-tag" // Automatically rename matching HTML tags
+    ]
+  }
+}
