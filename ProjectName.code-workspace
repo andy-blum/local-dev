@@ -30,14 +30,18 @@
     },
   ],
   "settings": {
+    
     // Set integrated terminal to open in this folder by default.
-    "terminal.integrated.cwd": ".",
+    "terminal.integrated.cwd": "${workspaceFolder:Project Root}",
+    
     // Always indent with 2 spaces per drupal coding standards.
     "editor.detectIndentation": false,
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
+    
     // Add empty line to end of file per coding standards.
     "files.insertFinalNewline": true,
+    
     // Add file type associations.
     "files.associations": {
       "*.html": "twig",
@@ -45,24 +49,37 @@
       "*.theme": "php",
       "*.inc": "php"
     },
-    // Send deleted items to system
-    // trash instead of insta-deleting.
+    
+    // Send deleted items to system trash instead of insta-deleting.
     "files.enableTrash": true
   },
   "launch": {
     "version": "0.2.0",
     "configurations": [
+      
       // DDEV xDebug Listener
       // https://ddev.readthedocs.io/en/stable/users/step-debugging/#vscode
       {
-        "name": "Listen for XDebug",
+        "name": "Listen for XDebug (DDEV)",
         "type": "php",
         "request": "launch",
         "hostname": "0.0.0.0",
         "port": 9000,
         "pathMappings": {
-          "/var/www/html": "${workspaceRoot}",
-        }
+          "/var/www/html": "${workspaceFolder:Project Root}",
+        },
+        
+        // Lando xDebug Listener
+        // https://docs.lando.dev/guides/lando-with-vscode.html
+        {
+          "name": "Listen for XDebug (Lando)",
+          "type": "php",
+          "request": "launch",
+          "port": 9003,
+          "pathMappings": {
+            "/app/": "${workspaceFolder:Project Root}"
+          }
+        },
       }
     ]
   },
