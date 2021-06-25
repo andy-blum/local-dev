@@ -41,7 +41,7 @@ with DDEV & VS Code. Main points:
 - **/web/sites/development.services.yml**
 
   Add `twig.config` settings for local development. For this file to be useful,
-  you'll need to create `settings.local.php` from `default.settings.php`.
+  you'll need to create `settings.local.php` from `example.settings.local.php` and include that file from within your `settings.php`.
 
 ## How do I use it?
 
