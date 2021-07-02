@@ -1,7 +1,7 @@
 name: ProjectName
 type: drupal9
 docroot: web
-php_version: "7.3"
+php_version: "8.0"
 webserver_type: nginx-fpm
 router_http_port: "80"
 router_https_port: "443"
@@ -10,30 +10,33 @@ additional_hostnames: []
 additional_fqdns: []
 mariadb_version: "10.3"
 mysql_version: ""
-provider: default
-use_dns_when_possible: true
-composer_version: ""
 hooks:
   pre-start:
     # Install composer dependencies using composer on host system
-    - exec-host: "composer install"
+    - exec-host: composer install
+
   post-start:
     # Install Drupal after start if not installed already
-    - exec: "(drush status bootstrap | grep -q Successful) || drush site-install -y --db-url=mysql://db:db@db/db"
+    - exec: (drush status bootstrap | grep -q Successful) || drush site-install -y --db-url=mysql://db:db@db/db
     # Generate a one-time login link for the admin account.
-    - exec: "drush uli 1"
+    - exec: drush uli 1
     # Minimize container shell prompt to CWD
     - exec: sudo echo 'PS1="\[\e[1;33m\]\w \$\[\e[0m\] "' >> ~/.bashrc
     # Add symlink to server root
     - exec: sudo ln -s /var/www/html /html
+
   post-import-db:
     # Clear the cache
-    - exec: "drush cr"
+    - exec: drush cr
+
+use_dns_when_possible: true
+composer_version: ""
+web_environment: []
 
 
-# This config.yaml was created with ddev version v1.16.6
-# webimage: drud/ddev-webserver:v1.16.6
-# dbimage: drud/ddev-dbserver-mariadb-10.2:v1.16.0
+# This config.yaml was created with ddev version v1.17.6
+# webimage: drud/ddev-webserver:v1.17.6
+# dbimage: drud/ddev-dbserver-mariadb-10.3:v1.17.3
 # dbaimage: phpmyadmin:5
 # However we do not recommend explicitly wiring these images into the
 # config.yaml as they may break future versions of ddev.
@@ -48,7 +51,7 @@ hooks:
 
 # docroot: <relative_path> # Relative path to the directory containing index.php.
 
-# php_version: "7.3"  # PHP version to use, "5.6", "7.0", "7.1", "7.2", "7.3", "7.4" "8.0"
+# php_version: "7.4"  # PHP version to use, "5.6", "7.0", "7.1", "7.2", "7.3", "7.4" "8.0"
 
 # You can explicitly specify the webimage, dbimage, dbaimage lines but this
 # is not recommended, as the images are often closely tied to ddev's' behavior,
@@ -72,6 +75,11 @@ hooks:
 # "ddev xdebug" to enable xdebug and "ddev xdebug off" to disable it work better,
 # as leaving xdebug enabled all the time is a big performance hit.
 
+# xhprof_enabled: false  # Set to true to enable xhprof and "ddev start" or "ddev restart"
+# Note that for most people the commands
+# "ddev xhprof" to enable xhprof and "ddev xhprof off" to disable it work better,
+# as leaving xhprof enabled all the time is a big performance hit.
+
 # webserver_type: nginx-fpm  # or apache-fpm
 
 # timezone: Europe/Berlin
@@ -80,7 +88,7 @@ hooks:
 # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 # For example Europe/Dublin or MST7MDT
 
-# composer_version: "2"
+# composer_version: ""
 # if composer_version:"" it will use the current ddev default composer release.
 # It can also be set to "1", to get most recent composer v1
 # or "2" for most recent composer v2.
@@ -119,6 +127,9 @@ hooks:
 # Great performance improvement but requires host configuration first.
 # See https://ddev.readthedocs.io/en/stable/users/performance/#using-nfs-to-mount-the-project-into-the-container
 
+# fail_on_hook_fail: False
+# Decide whether 'ddev start' should be interrupted by a failing hook
+
 # host_https_port: "59002"
 # The host port binding for https can be explicitly specified. It is
 # dynamic unless otherwise specified.
@@ -143,7 +154,7 @@ hooks:
 # mailhog_https_port: "8026"
 # The MailHog ports can be changed from the default 8025 and 8026
 
-# webimage_extra_packages: [php7.3-tidy, php-bcmath]
+# webimage_extra_packages: [php7.4-tidy, php-bcmath]
 # Extra Debian packages that are needed in the webimage can be added here
 
 # dbimage_extra_packages: [telnet,netcat]
@@ -167,8 +178,13 @@ hooks:
 
 # disable_settings_management: false
 # If true, ddev will not create CMS-specific settings files like
-# Drupal's settings.php/settings.ddev.php or TYPO3's AdditionalSettings.php
+# Drupal's settings.php/settings.ddev.php or TYPO3's AdditionalConfiguration.php
 # In this case the user must provide all such settings.
+
+# You can inject environment variables into the web container with:
+# web_environment:
+# - SOMEENV=somevalue
+# - SOMEOTHERENV=someothervalue
 
 # no_project_mount: false
 # (Experimental) If true, ddev will not mount the project into the web container;
@@ -176,8 +192,6 @@ hooks:
 # This is to enable experimentation with alternate file mounting strategies.
 # For advanced users only!
 
-# provider: default # Currently either "default" or "pantheon"
-#
 # Many ddev commands can be extended to run tasks before or after the
 # ddev command is executed, for example "post-start", "post-import-db",
 # "pre-composer", "post-composer"
