@@ -30,18 +30,14 @@
     },
   ],
   "settings": {
-    
     // Set integrated terminal to open in this folder by default.
     "terminal.integrated.cwd": "${workspaceFolder:Project Root}",
-    
     // Always indent with 2 spaces per drupal coding standards.
     "editor.detectIndentation": false,
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
-    
     // Add empty line to end of file per coding standards.
     "files.insertFinalNewline": true,
-    
     // Add file type associations.
     "files.associations": {
       "*.html": "twig",
@@ -49,14 +45,15 @@
       "*.theme": "php",
       "*.inc": "php"
     },
-    
     // Send deleted items to system trash instead of insta-deleting.
-    "files.enableTrash": true
+    "files.enableTrash": true,
+    // intelephense settings
+    "intelephense.environment.phpVersion": "8.0",
+    "intelephense.environment.documentRoot": "${workspaceFolder:Project Root}",
   },
   "launch": {
     "version": "0.2.0",
     "configurations": [
-      
       // DDEV xDebug Listener
       // https://ddev.readthedocs.io/en/stable/users/step-debugging/#vscode
       {
@@ -67,20 +64,19 @@
         "port": 9000,
         "pathMappings": {
           "/var/www/html": "${workspaceFolder:Project Root}",
-        },
-        
-        // Lando xDebug Listener
-        // https://docs.lando.dev/guides/lando-with-vscode.html
-        {
-          "name": "Listen for XDebug (Lando)",
-          "type": "php",
-          "request": "launch",
-          "port": 9003,
-          "pathMappings": {
-            "/app/": "${workspaceFolder:Project Root}"
-          }
-        },
-      }
+        }
+      },
+      // Lando xDebug Listener
+      // https://docs.lando.dev/guides/lando-with-vscode.html
+      {
+        "name": "Listen for XDebug (Lando)",
+        "type": "php",
+        "request": "launch",
+        "port": 9003,
+        "pathMappings": {
+          "/app/": "${workspaceFolder:Project Root}"
+        }
+      },
     ]
   },
   "extensions": {
@@ -93,7 +89,8 @@
       "tsega.drupal-8-javascript-snippets", // Drupal 8 JS Snippets
       "andrewdavidblum.drupal-smart-snippets", // Drupal Hook Snippets
       "formulahendry.auto-close-tag", // Automatically create closing HTML tags
-      "formulahendry.auto-rename-tag" // Automatically rename matching HTML tags
+      "formulahendry.auto-rename-tag", // Automatically rename matching HTML tags
+      "bmewburn.vscode-intelephense-client" // PHP hints & autocompletion
     ]
   }
 }
